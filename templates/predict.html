@@ -1,0 +1,401 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Layoff Prediction Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        input[type="submit"] {
+            padding: 12px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #888;
+        }
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Employee Layoff Prediction</h2>
+  <form action="{{ url_for('predict') }}" method="post">
+    
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="distance_from_home">Distance from Home:</label>
+            <input type="number" id="distance_from_home" name="distance_from_home" required>
+
+            <label for="education">Education:</label>
+            <select id="education" name="education" required>
+                <option value="1">Below College</option>
+                <option value="2">College</option>
+                <option value="3">Bachelor's</option>
+                <option value="4">Master's</option>
+                <option value="5">Doctor</option>
+            </select>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+
+            <label for="job_role">Job Role:</label>
+            <select id="job_role" name="job_role" required>
+                <option value="Sales Executive">Sales Executive</option>
+                <option value="Research Scientist">Research Scientist</option>
+                <option value="Laboratory Technician">Laboratory Technician</option>
+                <option value="Manufacturing Director">Manufacturing Director</option>
+                <option value="Healthcare Representative">Healthcare Representative</option>
+                <option value="Manager">Manager</option>
+                <option value="Sales Representative">Sales Representative</option>
+                <option value="Research Director">Research Director</option>
+                <option value="Human Resources">Human Resources</option>
+            </select>
+
+            <label for="monthly_income">Monthly Income:</label>
+            <input type="number" id="monthly_income" name="monthly_income" required>
+
+            <label for="num_company_changes">Number of Company Changes:</label>
+            <input type="number" id="num_company_changes" name="num_company_changes" required>
+
+            <label for="percent_salary_hike">Percent Salary Hike:</label>
+            <input type="number" step="0.01" id="percent_salary_hike" name="percent_salary_hike" required>
+
+            <label for="stock_option_level">Stock Option Level:</label>
+            <input type="number" id="stock_option_level" name="stock_option_level" required>
+
+            <label for="total_working_years">Total Working Years:</label>
+            <input type="number" id="total_working_years" name="total_working_years" required>
+
+            <label for="training_times_last_year">Training Times Last Year:</label>
+            <input type="number" id="training_times_last_year" name="training_times_last_year" required>
+
+            <label for="work_life_balance">Work Life Balance:</label>
+            <input type="number" id="work_life_balance" name="work_life_balance" required>
+
+            <label for="years_at_company">Years at Company:</label>
+            <input type="number" id="years_at_company" name="years_at_company" required>
+
+            <label for="job_satisfaction">Job Satisfaction:</label>
+            <input type="number" id="job_satisfaction" name="job_satisfaction" required>
+
+            <label for="environment_satisfaction">Environment Satisfaction:</label>
+            <input type="number" id="environment_satisfaction" name="environment_satisfaction" required>
+
+            <input type="submit" value="Predict">
+        </form>
+    </div>
+    <footer>
+        <p>&copy; 2024 Talent Transition Navigator. All rights reserved.</p>
+        <p><a href="#">Contact Us</a></p>
+    </footer>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Layoff Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: grid;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Employee Layoff Prediction</h2>
+        <form action="{{ url_for('predict') }}" method="post">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <!-- Business Travel -->
+        <label for="business_travel">Business Travel:</label>
+        <select id="business_travel" name="business_travel" required>
+            <option value="Travel_Rarely">Travel Rarely</option>
+            <option value="Travel_Frequently">Travel Frequently</option>
+            <option value="Non-Travel">Non-Travel</option>
+        </select><br><br>
+
+        <!-- Daily Rate -->
+        <label for="daily_rate">Daily Rate:</label>
+        <input type="number" id="daily_rate" name="daily_rate" required><br><br>
+
+        <!-- Department -->
+        <label for="department">Department:</label>
+        <select id="department" name="department" required>
+            <option value="Sales">Sales</option>
+            <option value="Research & Development">Research & Development</option>
+            <option value="Human Resources">Human Resources</option>
+        </select><br><br>
+
+        <!-- Distance From Home -->
+        <label for="distance_from_home">Distance From Home:</label>
+        <input type="number" id="distance_from_home" name="distance_from_home" required><br><br>
+
+        <!-- Education -->
+        <label for="education">Education Level:</label>
+        <input type="number" id="education" name="education" min="1" max="5" required><br><br>
+
+        <!-- Education Field -->
+        <label for="education_field">Education Field:</label>
+        <select id="education_field" name="education_field" required>
+            <option value="Life Sciences">Life Sciences</option>
+            <option value="Medical">Medical</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Technical Degree">Technical Degree</option>
+            <option value="Other">Other</option>
+        </select><br><br>
+
+        <!-- Employee Number -->
+        <label for="employee_number">Employee Number:</label>
+        <input type="number" id="employee_number" name="employee_number" required><br><br>
+
+        <!-- Environment Satisfaction -->
+        <label for="environment_satisfaction">Environment Satisfaction:</label>
+        <input type="number" id="environment_satisfaction" name="environment_satisfaction" min="1" max="4" required><br><br>
+
+        <!-- Gender -->
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br><br>
+
+        <!-- Hourly Rate -->
+        <label for="hourly_rate">Hourly Rate:</label>
+        <input type="number" id="hourly_rate" name="hourly_rate" required><br><br>
+
+        <!-- Job Involvement -->
+        <label for="job_involvement">Job Involvement:</label>
+        <input type="number" id="job_involvement" name="job_involvement" min="1" max="4" required><br><br>
+
+        <!-- Job Level -->
+        <label for="job_level">Job Level:</label>
+        <input type="number" id="job_level" name="job_level" min="1" max="5" required><br><br>
+
+        <!-- Job Role -->
+        <label for="job_role">Job Role:</label>
+        <select id="job_role" name="job_role" required>
+            <option value="Sales Executive">Sales Executive</option>
+            <option value="Research Scientist">Research Scientist</option>
+            <option value="Laboratory Technician">Laboratory Technician</option>
+            <option value="Manufacturing Director">Manufacturing Director</option>
+            <option value="Healthcare Representative">Healthcare Representative</option>
+            <option value="Manager">Manager</option>
+            <option value="Sales Representative">Sales Representative</option>
+            <option value="Research Director">Research Director</option>
+            <option value="Human Resources">Human Resources</option>
+        </select><br><br>
+
+        <!-- Job Satisfaction -->
+        <label for="job_satisfaction">Job Satisfaction:</label>
+        <input type="number" id="job_satisfaction" name="job_satisfaction" min="1" max="4" required><br><br>
+
+        <!-- Marital Status -->
+        <label for="marital_status">Marital Status:</label>
+        <select id="marital_status" name="marital_status" required>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Divorced">Divorced</option>
+        </select><br><br>
+
+        <!-- Monthly Income -->
+        <label for="monthly_income">Monthly Income:</label>
+        <input type="number" id="monthly_income" name="monthly_income" required><br><br>
+
+        <!-- Monthly Rate -->
+        <label for="monthly_rate">Monthly Rate:</label>
+        <input type="number" id="monthly_rate" name="monthly_rate" required><br><br>
+
+        <!-- Number of Companies Worked -->
+        <label for="num_companies_worked">Number of Companies Worked:</label>
+        <input type="number" id="num_companies_worked" name="num_companies_worked" required><br><br>
+
+        <!-- Over Time -->
+        <label for="overtime">Over Time:</label>
+        <select id="overtime" name="overtime" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br><br>
+
+        <!-- Percent Salary Hike -->
+        <label for="percent_salary_hike">Percent Salary Hike:</label>
+        <input type="number" id="percent_salary_hike" name="percent_salary_hike" required><br><br>
+
+        <!-- Performance Rating -->
+        <label for="performance_rating">Performance Rating:</label>
+        <input type="number" id="performance_rating" name="performance_rating" min="1" max="4" required><br><br>
+
+         <!-- Relationship Satisfaction -->
+         <label for="relationship_satisfaction">Relationship Satisfaction:</label>
+         <input type="number" id="relationship_satisfaction" name="relationship_satisfaction" min="1" max="4" required><br><br>
+ 
+         <!-- Stock Option Level -->
+         <label for="stock_option_level">Stock Option Level:</label>
+         <input type="number" id="stock_option_level" name="stock_option_level" min="0" max="3" required><br><br>
+ 
+         <!-- Total Working Years -->
+         <label for="total_working_years">Total Working Years:</label>
+         <input type="number" id="total_working_years" name="total_working_years" required><br><br>
+ 
+         <!-- Training Times Last Year -->
+         <label for="training_times_last_year">Training Times Last Year:</label>
+         <input type="number" id="training_times_last_year" name="training_times_last_year" required><br><br>
+ 
+         <!-- Work Life Balance -->
+         <label for="work_life_balance">Work-Life Balance:</label>
+         <input type="number" id="work_life_balance" name="work_life_balance" min="1" max="4" required><br><br>
+ 
+         <!-- Years At Company -->
+         <label for="years_at_company">Years at Company:</label>
+         <input type="number" id="years_at_company" name="years_at_company" required><br><br>
+ 
+         <!-- Years In Current Role -->
+         <label for="years_in_current_role">Years in Current Role:</label>
+         <input type="number" id="years_in_current_role" name="years_in_current_role" required><br><br>
+ 
+         <!-- Years Since Last Promotion -->
+         <label for="years_since_last_promotion">Years Since Last Promotion:</label>
+         <input type="number" id="years_since_last_promotion" name="years_since_last_promotion" required><br><br>
+ 
+         <!-- Years With Current Manager -->
+         <label for="years_with_curr_manager">Years with Current Manager:</label>
+         <input type="number" id="years_with_curr_manager" name="years_with_curr_manager" required><br><br>
+         
+
+        <input type="submit" value="Predict">
+        </form>
+    </div>
+    <footer>
+        <p>&copy; 2024 Talent Transition Navigator. All rights reserved.</p>
+        <p><a href="#">Contact Us</a></p>
+    </footer>
+</body>
+</html>

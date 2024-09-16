@@ -1,0 +1,216 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Layoff Prediction Visualization</title>
+</head>
+<body>
+    <h2>Layoff Prediction Visualization</h2>
+    <h3>Total Employees and Predicted Layoffs by Department</h3>
+    <img src="data:image/png;base64,{{ plot_url }}" alt="Total Employees and Predicted Layoffs">
+    <h3>Number of Predicted Layoffs by Department</h3>
+    <img src="data:image/png;base64,{{ layoffs_plot_url }}" alt="Number of Predicted Layoffs">
+</body>
+</html> -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layoff Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .chart-container {
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin: 5px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            background-color: #004494;
+            transform: translateY(0);
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #888;
+        }
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Layoff Prediction Results</h2>
+        <div class="chart-container">
+            <h3>Total Employees and Predicted Layoffs by Department</h3>
+            <img src="data:image/png;base64,{{ plot_url }}" alt="Total Employees and Predicted Layoffs by Department">
+        </div>
+        <div class="chart-container">
+            <h3>Number of Predicted Layoffs by Department</h3>
+            <img src="data:image/png;base64,{{ layoffs_plot_url }}" alt="Number of Predicted Layoffs by Department">
+        </div>
+        <div class="table-container">
+            <h3>Laid-Off Employees</h3>
+            {{ laid_off_employees|safe }}
+        </div>
+        <a href="{{ url_for('index') }}" class="btn">Back to Main</a>
+    </div>
+    <footer>
+        <p>&copy; 2024 Talent Transition Navigator. All rights reserved.</p>
+        <p><a href="#">Contact Us</a></p>
+    </footer>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layoff Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .chart-container {
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin: 5px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            background-color: #004494;
+            transform: translateY(0);
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #888;
+        }
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Layoff Prediction Results</h2>
+        <div class="chart-container">
+            <h3>Total Employees and Predicted Layoffs by Department</h3>
+            <img src="data:image/png;base64,{{ plot_url }}" alt="Total Employees and Predicted Layoffs by Department">
+        </div>
+        <div class="chart-container">
+            <h3>Number of Predicted Layoffs by Department</h3>
+            <img src="data:image/png;base64,{{ layoffs_plot_url }}" alt="Number of Predicted Layoffs by Department">
+        </div>
+        <div class="chart-container">
+            <h3>Confusion Matrix
+        </h3>
+        <img src="data:image/png;base64,{{ confusion_matrix_url }}" alt="Confusion Matrix">
+    </div>
+    <div class="table-container">
+        <h3>Laid-Off Employees</h3>
+        {{ laid_off_employees|safe }}
+    </div>
+    <a href="{{ url_for('index') }}" class="btn">Back to Main</a>
+</div>
+<footer>
+    <p>&copy; 2024 Talent Transition Navigator. All rights reserved.</p>
+    <p><a href="#">Contact Us</a></p>
+</footer>
+</body>
+</html>
+
+

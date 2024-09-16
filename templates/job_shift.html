@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search</title>
+    <!-- Link to your CSS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Static styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar button {
+            padding: 12px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #0056b3;
+        }
+
+        .job-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        .job-card-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .job-card-content {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .home-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .home-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Find Jobs Based on Your Skills</h2>
+        <div class="search-bar">
+            <input
+                type="text"
+                id="searchSkill"
+                placeholder="Enter a skill (e.g., React, Python)"
+            />
+            <button id="searchButton">Search</button>
+        </div>
+        <div id="searchResults"></div>
+        <a href="{{ url_for('index') }}" class="home-button">Back to Home</a>
+    </div>
+
+    <script>
+        const jobsData = [
+            // { id: 1, title: 'Frontend Developer', skills: ['React', 'JavaScript', 'CSS'] },
+            // { id: 2, title: 'Backend Developer', skills: ['Node.js', 'Express', 'MongoDB'] },
+            // { id: 3, title: 'Full Stack Developer', skills: ['React', 'Node.js', 'JavaScript', 'MongoDB'] },
+            // { id: 4, title: 'Data Scientist', skills: ['Python', 'Machine Learning', 'SQL'] },
+            // { id: 5, title: 'UX Designer', skills: ['Figma', 'User Research', 'Prototyping'] },
+            // { id: 6, title: 'Java Developer', skills: ['Java', 'Spring', 'Hibernate'] },
+            // { id: 7, title: 'Cloud Engineer', skills: ['AWS', 'Azure', 'Docker'] },
+            // { id: 8, title: 'Software Developer', skills: ['C++', 'Java', 'Git'] },
+            // { id: 9, title: 'Python Developer', skills: ['Python', 'Django', 'Flask'] },
+            // { id: 10, title: 'Data Analyst', skills: ['SQL', 'Excel', 'Tableau'] },
+            // { id: 11, title: 'Data Engineer', skills: ['SQL', 'Big Data', 'ETL'] },
+            { id: 12, title: 'ML Engineer', skills: ['Machine Learning', 'TensorFlow', 'Keras'] },
+            { id: 1, title: 'Frontend Developer', skills: ['React', 'JavaScript', 'CSS', 'HTML', 'Redux'] },
+            { id: 2, title: 'Backend Developer', skills: ['Node.js', 'Express', 'MongoDB', 'REST APIs', 'Authentication'] },
+            { id: 3, title: 'Full Stack Developer', skills: ['React', 'Node.js', 'JavaScript', 'MongoDB', 'GraphQL'] },
+            { id: 4, title: 'Data Scientist', skills: ['Python', 'Machine Learning', 'SQL', 'Pandas', 'Scikit-learn'] },
+            { id: 5, title: 'UX Designer', skills: ['Figma', 'User Research', 'Prototyping', 'Wireframing', 'Usability Testing'] },
+            { id: 6, title: 'Java Developer', skills: ['Java', 'Spring Boot', 'Hibernate', 'Maven', 'JPA'] },
+            { id: 7, title: 'Cloud Engineer', skills: ['AWS', 'Azure', 'GCP', 'Terraform', 'Docker'] },
+            { id: 8, title: 'Software Developer', skills: ['JavaScript', 'Python', 'C++', 'Object-Oriented Programming', 'Algorithms'] },
+            { id: 9, title: 'Python Developer', skills: ['Python', 'Django', 'Flask', 'REST APIs', 'Database Management'] },
+            { id: 10, title: 'Data Analyst', skills: ['SQL', 'Excel', 'Data Visualization', 'Power BI', 'Tableau'] },
+            { id: 11, title: 'Data Engineer', skills: ['ETL', 'Big Data', 'Apache Hadoop', 'Apache Spark', 'SQL'] },
+            { id: 12, title: 'ML Engineer', skills: ['Machine Learning', 'TensorFlow', 'Keras', 'Deep Learning', 'Model Deployment'] },
+            { id: 13, title: 'HR Manager', skills: ['Recruitment', 'Employee Relations', 'Performance Management', 'HR Policies', 'Compensation & Benefits'] },
+            { id: 14, title: 'HR Generalist', skills: ['Employee Onboarding', 'HR Administration', 'Policy Implementation', 'Payroll Management', 'Compliance'] },
+            { id: 15, title: 'Talent Acquisition Specialist', skills: ['Sourcing', 'Recruiting', 'Interviewing', 'Talent Pipelines', 'Candidate Experience'] },
+            { id: 16, title: 'HR Business Partner', skills: ['Strategic HR Planning', 'Change Management', 'Business Acumen', 'Employee Engagement', 'Leadership Development'] },
+            { id: 17, title: 'Research Scientist', skills: ['Experimental Design', 'Data Analysis', 'Laboratory Techniques', 'Research Methodologies', 'Statistical Analysis'] },
+            { id: 18, title: 'Market Research Analyst', skills: ['Market Analysis', 'Data Collection', 'Survey Design', 'Data Interpretation', 'Competitive Analysis'] },
+            { id: 19, title: 'Clinical Research Coordinator', skills: ['Clinical Trials Management', 'Regulatory Compliance', 'Patient Recruitment', 'Data Management', 'Clinical Documentation'] },
+            { id: 20, title: 'Sales Manager', skills: ['Sales Strategy', 'Team Leadership', 'Customer Relationship Management', 'Sales Forecasting', 'Negotiation'] },
+            { id: 21, title: 'Account Executive', skills: ['Sales Prospecting', 'Lead Generation', 'Sales Presentations', 'Customer Engagement', 'CRM Systems'] },
+            { id: 22, title: 'Business Development Manager', skills: ['Market Expansion', 'Partnership Development', 'Sales Strategy', 'Client Acquisition', 'Networking'] },
+            { id: 23, title: 'Inside Sales Representative', skills: ['Cold Calling', 'Product Knowledge', 'Sales Process Management', 'Lead Qualification', 'Customer Retention'] },
+            { id: 24, title: 'Marketing Manager', skills: ['Marketing Strategy', 'Campaign Management', 'Market Research', 'Brand Management', 'Digital Marketing'] },
+            { id: 25, title: 'Content Marketing Specialist', skills: ['Content Creation', 'SEO', 'Content Strategy', 'CMS', 'Analytics'] },
+            { id: 26, title: 'Social Media Manager', skills: ['Social Media Strategy', 'Content Creation', 'Community Management', 'Social Media Advertising', 'Analytics'] },
+            { id: 27, title: 'Email Marketing Specialist', skills: ['Email Campaign Design', 'List Management', 'A/B Testing', 'Analytics', 'Email Automation Tools'] },
+            { id: 28, title: 'Digital Marketing Specialist', skills: ['PPC Advertising', 'Search Engine Marketing', 'Conversion Rate Optimization', 'Content Marketing', 'Social Media Marketing'] },
+            { id: 29, title: 'Product Manager', skills: ['Product Lifecycle Management', 'Market Research', 'Agile Methodologies', 'Stakeholder Management', 'Strategic Planning'] },
+            { id: 30, title: 'DevOps Engineer', skills: ['CI/CD', 'Docker', 'Kubernetes', 'Infrastructure as Code', 'Monitoring & Logging', 'AWS', 'Azure', 'GCP'] },
+            { id: 31, title: 'Cybersecurity Analyst', skills: ['Network Security', 'Threat Analysis', 'Vulnerability Assessment', 'Incident Response', 'SIEM'] },
+            { id: 32, title: 'Business Analyst', skills: ['Requirements Gathering', 'Data Analysis', 'Business Process Modeling', 'Stakeholder Communication', 'Project Management'] },
+            { id: 33, title: 'Systems Architect', skills: ['System Design', 'Integration', 'Cloud Architecture', 'Enterprise Architecture', 'SDLC', 'Performance Optimization'] },
+            { id: 34, title: 'AI Research Scientist', skills: ['Machine Learning Algorithms', 'Deep Learning', 'NLP', 'Research Methodologies', 'Statistical Analysis'] },
+            { id: 35, title: 'UX/UI Developer', skills: ['User Interface Design', 'User Experience Research', 'HTML', 'CSS', 'JavaScript', 'Design Tools', 'Responsive Design'] },
+            { id: 36, title: 'Sales Engineer', skills: ['Technical Sales', 'Product Demonstrations', 'CRM', 'Technical Knowledge', 'Negotiation Skills'] },
+            { id: 37, title: 'Network Administrator', skills: ['Network Configuration', 'Network Security', 'Troubleshooting', 'VPN', 'Firewall Management', 'Network Monitoring Tools'] },
+            { id: 38, title: 'Database Administrator (DBA)', skills: ['Database Design', 'SQL', 'NoSQL', 'Backup & Recovery', 'Performance Tuning', 'Security Management'] },
+            { id: 39, title: 'Content Strategist', skills: ['Content Planning', 'SEO', 'CMS', 'Analytics', 'Writing & Editing'] },
+            { id: 40, title: 'Cloud Solutions Architect', skills: ['Cloud Services', 'Cloud Migration', 'Cost Management', 'High Availability', 'Disaster Recovery', 'Security and Compliance'] }
+
+        ];
+
+        $(document).ready(function() {
+            $('#searchButton').click(function() {
+                const searchSkill = $('#searchSkill').val().toLowerCase();
+                const results = jobsData.filter(job =>
+                    job.skills.some(skill =>
+                        skill.toLowerCase().includes(searchSkill)
+                    )
+                );
+
+                $('#searchResults').empty();
+                results.forEach(job => {
+                    $('#searchResults').append(`
+                        <div class="job-card">
+                            <div class="job-card-header">
+                                <h3>${job.title}</h3>
+                            </div>
+                            <div class="job-card-content">
+                                <p>Required skills: ${job.skills.join(', ')}</p>
+                            </div>
+                        </div>
+                    `);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
